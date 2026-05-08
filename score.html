@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สรุปผลคะแนนเลือกตั้ง - Pioneer Party</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <link rel="apple-touch-icon" href="images/Pioneer logo 2.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+    tailwind.config = {
+        darkMode: 'class', 
+        theme: {
+            extend: {
+                colors: { 
+                    partyBlue: '#1e3a8a', 
+                    partyDarkBlue: '#172554',
+                    partyYellow: '#facc15',
+                    offWhite: '#fdfbf7',
+                    darkBg: '#0f172a'
+                },
+                fontFamily: { 
+                    sans: ['Anakotmai', 'sans-serif'], 
+                    display: ['Anakotmai', 'sans-serif'],
+                },
+                boxShadow: {
+                    'pop': '6px 6px 0px 0px rgba(30, 58, 138, 1)',
+                    'pop-hover': '2px 2px 0px 0px rgba(30, 58, 138, 1)',
+                    'pop-yellow': '6px 6px 0px 0px rgba(250, 204, 21, 1)',
+                    'pop-white': '4px 4px 0px 0px #ffffff',
+                    'pop-red': '4px 4px 0px 0px #991b1b', /* เพิ่มเงาสีแดงสำหรับปุ่มปิด */
+                },
+                animation: {
+                    'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    'marquee': 'marquee 25s linear infinite',
+                    'float': 'float 6s ease-in-out infinite',
+                    'bounce-x': 'bounceX 1s infinite',
+                    'shimmer': 'shimmer 2.5s infinite',
+                    'grow-width': 'growWidth 1.5s ease-out forwards', /* เพิ่มสำหรับกราฟ */
+                    'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+                },
+                keyframes: {
+                    slideUp: {
+                        '0%': { transform: 'translateY(50px)', opacity: '0' },
+                        '100%': { transform: 'translateY(0)', opacity: '1' },
+                    },
+                    marquee: {
+                        '0%': { transform: 'translateX(0%)' },
+                        '100%': { transform: 'translateX(-100%)' },
+                    },
+                    float: {
+                        '0%, 100%': { transform: 'translateY(0)' },
+                        '50%': { transform: 'translateY(-20px)' },
+                    },
+                    bounceX: {
+                        '0%, 100%': { transform: 'translateX(-25%)', animationTimingFunction: 'cubic-bezier(0.8,0,1,1)' },
+                        '50%': { transform: 'none', animationTimingFunction: 'cubic-bezier(0,0,0.2,1)' },
+                    },
+                    shimmer: {
+                        '0%': { left: '-100%' },
+                        '100%': { left: '200%' }
+                    },
+                    growWidth: {
+                        '0%': { width: '0%' },
+                    },
+                    fadeInUp: {
+                        '0%': { opacity: '0', transform: 'translateY(20px)' },
+                        '100%': { opacity: '1', transform: 'translateY(0)' },
+                    },
+                },
+                backgroundImage: {
+                    'dot-pattern': 'radial-gradient(#1e3a8a 1px, transparent 1px)',
+                }
+            }
+        }
+    }
+    </script>
+    <style>
+        @font-face {font-family: 'Anakotmai';src: url('Fonts/Anakotmai-Light.ttf') format('truetype');font-weight: 300;font-style: normal;}
+        @font-face {font-family: 'Anakotmai';src: url('Fonts/Anakotmai-Medium.ttf') format('truetype');font-weight: 500;font-style: normal;}
+        @font-face {font-family: 'Anakotmai';src: url('Fonts/Anakotmai-Bold.ttf') format('truetype');font-weight: 700; font-style: normal;}
+        @font-face { font-family: 'DancingScript'; src: url('Fonts/DancingScript-VariableFont_wght.ttf') format('truetype'); font-weight: 400 700; }
+        .font-marker { font-family: 'DancingScript', cursive; }
+
+        .bg-noise {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 50; opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+        }
+
+        /* Custom Cursor */
+        @media (min-width: 768px) { body { cursor: none; } }
+        #cursor {
+            position: fixed; top: 0; left: 0; width: 20px; height: 20px;
+            background-color: #facc15; border: 2px solid #1e3a8a; border-radius: 50%;
+            pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s; mix-blend-mode: difference;
+        }
+        #cursor.hovered { width: 50px; height: 50px; background-color: transparent; border-width: 2px; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #1e3a8a; }
+        ::-webkit-scrollbar-thumb:hover { background: #facc15; }
+        
+        /* Table Styles (เฉพาะหน้า Score) */
+        .score-table th { background-color: #1e3a8a; color: white; padding: 12px 16px; text-align: left; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; }
+        .score-table td { padding: 12px 16px; border-bottom: 1px solid #e5e7eb; font-weight: 500; }
+        .dark .score-table td { border-bottom: 1px solid #374151; }
+        .score-table tr.winner { background-color: rgba(250, 204, 21, 0.2); }
+        .dark .score-table tr.winner { background-color: rgba(250, 204, 21, 0.1); }
+        .score-table tr:hover { background-color: #f9fafb; transition: background-color 0.2s; }
+        .dark .score-table tr:hover { background-color: rgba(55, 65, 81, 0.5); }
+    </style>
+</head>
+<body class="bg-offWhite dark:bg-gray-900 text-gray-900 dark:text-gray-100 overflow-x-hidden relative transition-colors duration-300 min-h-screen flex flex-col">
+
+    <div id="cursor"></div>
+
+    <div id="app-loader" class="fixed inset-0 z-[9999] bg-partyBlue flex flex-col items-center justify-center transition-opacity duration-500">
+        <img src="images/Pioneer logo 1.png" alt="Logo" class="w-24 h-24 mb-6 animate-pulse drop-shadow-2xl">
+        <div class="flex flex-col items-center space-y-2">
+            <div class="flex space-x-1">
+                <div class="w-3 h-3 bg-partyYellow rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                <div class="w-3 h-3 bg-partyYellow rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                <div class="w-3 h-3 bg-partyYellow rounded-full animate-bounce" style="animation-delay: 0.3s"></div>
+            </div>
+            <p class="text-white font-mono text-sm tracking-widest mt-2 opacity-80">กำลังโหลดผลคะแนน...</p>
+        </div>
+    </div>
+
+    <div class="bg-noise"></div>
+
+    <nav class="fixed top-0 left-0 right-0 z-[60] bg-white dark:bg-gray-900 border-b-4 border-partyBlue dark:border-gray-800 shadow-pop transition-transform duration-300 h-[68px] md:h-[76px]" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center relative z-20 bg-white dark:bg-gray-900 h-full">
+            <a href="index.html" class="flex items-center gap-3 group hover-trigger z-20">
+                <div class="rounded-none p-1 bg-partyBlue group-hover:bg-partyYellow transition-colors duration-300">
+                    <img src="images/Pioneer logo 2.png" alt="Pioneer Logo" class="h-8 w-8 md:h-10 md:w-10 object-contain bg-white">
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="text-xl md:text-2xl font-black text-partyBlue dark:text-partyYellow uppercase tracking-tighter group-hover:translate-x-1 transition-transform">Election</span>
+                    <span class="text-[10px] md:text-xs font-bold text-partyYellow bg-partyBlue px-1 inline-block w-max transform -rotate-2 group-hover:rotate-0 transition-transform">RESULTS</span>
+                </div>
+            </a>
+
+            <ul class="hidden md:flex space-x-4 items-center">
+                <li>
+                    <a href="index.html" class="hover-trigger flex items-center gap-2 bg-red-600 text-white px-5 py-2 font-black uppercase tracking-wider border-2 border-red-800 shadow-pop-red hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all rounded-md">
+                        <span>ปิดหน้านี้</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <button onclick="toggleTheme()" class="bg-gray-100 dark:bg-gray-800 p-2 rounded-full border-2 border-gray-300 dark:border-gray-600 hover:border-partyYellow transition-all group hover-trigger">
+                        <svg class="sun-icon w-5 h-5 text-gray-500 dark:text-yellow-400 hidden group-hover:rotate-45 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <svg class="moon-icon w-5 h-5 text-partyBlue group-hover:-rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                </li>
+            </ul>
+
+            <button id="mobile-menu-btn" class="md:hidden text-partyBlue dark:text-partyYellow p-2 focus:outline-none z-20 hover-trigger">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-partyBlue dark:bg-gray-800 border-t-2 border-partyYellow shadow-xl z-10 flex flex-col p-4 space-y-3">
+            <a href="index.html" class="block bg-red-600 text-white font-black text-center text-xl py-3 border-2 border-red-800 shadow-[4px_4px_0px_0px_#7f1d1d] hover:translate-y-1 hover:shadow-none transition-all">
+                ปิดหน้านี้ (กลับหน้าหลัก)
+            </a>
+            
+            <button onclick="toggleTheme()" class="flex items-center justify-between w-full text-white font-bold text-xl py-2 border-b border-white/20 hover:text-partyYellow transition-colors group">
+                <span>โหมดมืด / สว่าง</span>
+                <div class="relative w-8 h-8 flex items-center justify-center border-2 border-white rounded-full bg-white/10 group-hover:bg-partyYellow group-hover:text-partyBlue group-hover:border-partyBlue transition-colors">
+                    <svg class="sun-icon w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg class="moon-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-28 pb-12 px-4 relative z-10 container mx-auto flex-grow">
+        
+        <div class="text-center mb-12 animate-fade-in-up">
+            <span class="bg-partyYellow text-partyBlue px-4 py-1 text-sm font-black uppercase inline-block mb-4 rotate-2 border-2 border-black shadow-pop">
+                Official Report
+            </span>
+            <h1 class="text-4xl md:text-6xl font-black text-partyBlue dark:text-white tracking-tighter hover-trigger">
+                ELECTION <span class="text-transparent bg-clip-text bg-gradient-to-r from-partyBlue to-partyYellow dark:from-white dark:to-partyYellow">RESULTS</span>
+            </h1>
+            <p class="mt-4 text-xl text-gray-600 dark:text-gray-300">รายงานผลการเลือกตั้งสภานักเรียน อย่างเป็นทางการ</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 border-4 border-partyBlue dark:border-partyYellow shadow-pop p-6 md:p-8 mb-16 rounded-xl relative overflow-hidden animate-fade-in-up hover-trigger">
+            <div class="absolute inset-0 bg-dot-pattern opacity-5"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl font-black text-partyBlue dark:text-white mb-6 border-b-4 border-partyYellow pb-2 inline-block">
+                    🏆 สรุปคะแนนรวม (Total)
+                </h2>
+                
+                <div class="flex items-center gap-6 mb-8 bg-partyYellow/20 p-4 rounded-lg border-2 border-partyYellow">
+                    <div class="text-6xl animate-bounce">🥇</div>
+                    <div>
+                        <p class="text-sm font-bold text-gray-500 uppercase">Winner (อันดับ 1)</p>
+                        <h3 class="text-4xl md:text-5xl font-black text-partyBlue dark:text-white">Pioneer <span class="text-lg bg-partyBlue text-white px-2 rounded">เบอร์ 3</span></h3>
+                        <p class="text-3xl font-bold mt-1">886 <span class="text-base font-normal">คะแนน</span></p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="hover-trigger">
+                        <div class="flex justify-between text-sm font-bold mb-1">
+                            <span>#3 Pioneer</span>
+                            <span>886 คะแนน</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700 overflow-hidden">
+                            <div class="bg-partyYellow h-4 rounded-full animate-grow-width shadow-[0_0_10px_rgba(250,204,21,0.5)]" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="hover-trigger">
+                        <div class="flex justify-between text-sm font-bold mb-1">
+                            <span>#1 Next gen one</span>
+                            <span>304 คะแนน</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700 overflow-hidden">
+                            <div class="bg-partyBlue h-4 rounded-full animate-grow-width" style="width: 34.3%"></div>
+                        </div>
+                    </div>
+                    <div class="hover-trigger">
+                        <div class="flex justify-between text-sm font-bold mb-1">
+                            <span>#4 PSC NEXT GEN</span>
+                            <span>254 คะแนน</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700 overflow-hidden">
+                            <div class="bg-gray-400 h-4 rounded-full animate-grow-width" style="width: 28.6%"></div>
+                        </div>
+                    </div>
+                    <div class="hover-trigger">
+                        <div class="flex justify-between text-sm font-bold mb-1">
+                            <span>#2 Just for you</span>
+                            <span>251 คะแนน</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700 overflow-hidden">
+                            <div class="bg-gray-400 h-4 rounded-full animate-grow-width" style="width: 28.3%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 flex gap-4 text-sm text-gray-500 justify-end font-mono">
+                    <span>ไม่ประสงค์ลงคะแนน: <b>149</b></span>
+                    <span>บัตรเสีย: <b>69</b></span>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-black text-center mb-8 text-gray-700 dark:text-gray-300 uppercase tracking-widest">
+            — รายละเอียดรายหน่วย —
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow animate-fade-in-up hover-trigger" style="animation-delay: 0.1s">
+                <div class="bg-partyBlue text-white p-4 border-b-4 border-partyYellow">
+                    <h3 class="font-black text-xl">📍 หน่วยเลือกตั้งที่ 1</h3>
+                </div>
+                <div class="h-48 bg-gray-200 relative group overflow-hidden">
+                    <img src="images/ผลเลือกตั้ง/หน่วยที่ 1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <button onclick="openEvidence('images/ผลเลือกตั้ง/หน่วยที่ 1.jpg')" class="cursor-pointer text-white font-bold border-2 border-white px-4 py-2 rounded-full hover:bg-white hover:text-partyBlue transition-all transform hover:scale-105 active:scale-95 shadow-lg absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                    🔍 ดูหลักฐาน
+                    </button>
+                </div>
+                <div class="p-4">
+                    <table class="w-full text-sm score-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>พรรค</th>
+                                <th class="text-right">คะแนน</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="winner">
+                                <td class="font-black text-partyBlue">3</td>
+                                <td class="font-bold text-partyBlue">Pioneer 👑</td>
+                                <td class="text-right font-black text-lg">328</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Next gen one</td>
+                                <td class="text-right">145</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Just for you</td>
+                                <td class="text-right">95</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>PSC NEXT GEN</td>
+                                <td class="text-right">91</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mt-4 pt-4 border-t border-dashed border-gray-300 text-xs text-gray-500 flex justify-between">
+                        <span>ไม่ประสงค์ฯ: <b>38</b></span>
+                        <span>บัตรเสีย: <b>17</b></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow animate-fade-in-up hover-trigger" style="animation-delay: 0.2s">
+                <div class="bg-partyBlue text-white p-4 border-b-4 border-partyYellow">
+                    <h3 class="font-black text-xl">📍 หน่วยเลือกตั้งที่ 2</h3>
+                </div>
+                <div class="h-48 bg-gray-200 relative group overflow-hidden">
+                    <img src="images/ผลเลือกตั้ง/หน่วยที่ 2.jpg"class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                     <button onclick="openEvidence('images/ผลเลือกตั้ง/หน่วยที่ 2.jpg')" class="cursor-pointer text-white font-bold border-2 border-white px-4 py-2 rounded-full hover:bg-white hover:text-partyBlue transition-all transform hover:scale-105 active:scale-95 shadow-lg absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                    🔍 ดูหลักฐาน
+                    </button>
+                </div>
+                <div class="p-4">
+                    <table class="w-full text-sm score-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>พรรค</th>
+                                <th class="text-right">คะแนน</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="winner">
+                                <td class="font-black text-partyBlue">3</td>
+                                <td class="font-bold text-partyBlue">Pioneer 👑</td>
+                                <td class="text-right font-black text-lg">319</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Next gen one</td>
+                                <td class="text-right">96</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>PSC NEXT GEN</td>
+                                <td class="text-right">88</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Just for you</td>
+                                <td class="text-right">81</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mt-4 pt-4 border-t border-dashed border-gray-300 text-xs text-gray-500 flex justify-between">
+                        <span>ไม่ประสงค์ฯ: <b>63</b></span>
+                        <span>บัตรเสีย: <b>25</b></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow animate-fade-in-up hover-trigger" style="animation-delay: 0.3s">
+                <div class="bg-partyBlue text-white p-4 border-b-4 border-partyYellow">
+                    <h3 class="font-black text-xl">📍 หน่วยเลือกตั้งที่ 3</h3>
+                </div>
+                <div class="h-48 bg-gray-200 relative group overflow-hidden">
+                    <img src="images/ผลเลือกตั้ง/หน่วยที่ 3.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                     <button onclick="openEvidence('images/ผลเลือกตั้ง/หน่วยที่ 3.jpg')" class="cursor-pointer text-white font-bold border-2 border-white px-4 py-2 rounded-full hover:bg-white hover:text-partyBlue transition-all transform hover:scale-105 active:scale-95 shadow-lg absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                    🔍 ดูหลักฐาน
+                    </button>
+                </div>
+                <div class="p-4">
+                    <table class="w-full text-sm score-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>พรรค</th>
+                                <th class="text-right">คะแนน</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="winner">
+                                <td class="font-black text-partyBlue">3</td>
+                                <td class="font-bold text-partyBlue">Pioneer 👑</td>
+                                <td class="text-right font-black text-lg">239</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Just for you</td>
+                                <td class="text-right">75</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>PSC NEXT GEN</td>
+                                <td class="text-right">75</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Next gen one</td>
+                                <td class="text-right">63</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mt-4 pt-4 border-t border-dashed border-gray-300 text-xs text-gray-500 flex justify-between">
+                        <span>ไม่ประสงค์ฯ: <b>48</b></span>
+                        <span>บัตรเสีย: <b>27</b></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <div id="evidence-modal" class="fixed inset-0 z-[100] bg-black/90 hidden flex items-center justify-center p-4 backdrop-blur-sm" onclick="closeEvidence()">
+    <div class="relative max-w-4xl w-full max-h-screen">
+        <button class="absolute -top-12 right-0 text-white text-4xl font-bold hover:text-partyYellow transition-colors">&times;</button>
+        <img id="evidence-img" src="" class="w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-2xl border-4 border-white">
+        <p class="text-white text-center mt-2 font-mono text-sm opacity-80">คลิกที่ว่างเพื่อปิด</p>
+    </div>
+    </div>
+
+    <footer class="bg-partyBlue dark:bg-gray-950 text-white py-12 relative shadow-[0_-10px_40px_rgba(0,0,0,0.3)] z-50 overflow-hidden transition-colors duration-300">
+        <div class="absolute top-0 left-0 w-full h-2 bg-partyYellow"></div>
+        <div class="absolute -right-10 -bottom-20 w-64 h-64 border-4 border-partyYellow rounded-full opacity-20"></div>
+
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-0 relative z-10">
+            
+            <div class="flex-shrink-0 order-2 md:order-1 hover-trigger">
+                <div class="bg-white p-2 rounded-none rotate-3 hover:rotate-0 transition-transform duration-300 shadow-pop-yellow w-20 h-20 md:w-24 md:h-24 flex items-center justify-center border-2 border-black">
+                    <img src="images/Pioneer logo 3.png" alt="Pioneer Logo" class="w-full h-full object-contain">
+                </div>
+            </div>
+
+            <div class="text-center order-1 md:order-2 flex-grow">
+                <h3 class="font-marker text-2xl md:text-4xl lg:text-5xl text-white mb-2 tracking-wide leading-tight">
+                    Follow us & get to know Pioneer
+                </h3>
+                <p class="font-marker text-partyYellow text-xl md:text-3xl mb-2 leading-tight">
+                    Because every voice matters
+                </p>
+                <div class="flex justify-center gap-2 mt-4">
+                     <span class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 0s"></span>
+                     <span class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                     <span class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
+                </div>
+                <p class="text-xs opacity-50 mt-4 text-gray-300">Application Version <span id="app-version"></span></p>
+            </div>
+
+            <div class="flex flex-col items-center md:items-end gap-3 order-3 md:order-3 flex-shrink-0">
+                <span class="text-sm font-black text-partyYellow uppercase tracking-widest bg-partyBlue border border-partyYellow px-2">ช่องทางการติดต่อ</span>
+                <a href="https://instagram.com/thepioneerpsc" target="_blank" class="hover-trigger flex items-center gap-3 hover:text-partyYellow transition-colors group">
+                    <span class="font-bold text-xl md:text-2xl group-hover:translate-x-[-5px] transition-transform">thepioneerpsc</span>
+                    <div class="bg-white text-partyBlue p-2 rounded-none border border-black hover:bg-partyYellow transition-colors shadow-[2px_2px_0px_0px_#fff] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </div>
+                </a>
+                <a href="https://tiktok.com/@thepioneerpsc" target="_blank" class="hover-trigger flex items-center gap-3 hover:text-partyYellow transition-colors group">
+                    <span class="font-bold text-xl md:text-2xl group-hover:translate-x-[-5px] transition-transform">thepioneerpsc</span>
+                    <div class="bg-white text-partyBlue p-2 rounded-none border border-black hover:bg-partyYellow transition-colors shadow-[2px_2px_0px_0px_#fff] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        // --- Dark Mode Logic ---
+        const html = document.documentElement;
+        
+        function updateIcons(isDark) {
+            const sunIcons = document.querySelectorAll('.sun-icon');
+            const moonIcons = document.querySelectorAll('.moon-icon');
+            if (isDark) {
+                sunIcons.forEach(el => el.classList.remove('hidden'));
+                moonIcons.forEach(el => el.classList.add('hidden'));
+            } else {
+                sunIcons.forEach(el => el.classList.add('hidden'));
+                moonIcons.forEach(el => el.classList.remove('hidden'));
+            }
+        }
+
+        function checkTheme() {
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+                updateIcons(true);
+            } else {
+                html.classList.remove('dark');
+                updateIcons(false);
+            }
+        }
+        checkTheme();
+
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                updateIcons(false);
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                updateIcons(true);
+            }
+        }
+
+        // --- Custom Cursor Logic ---
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const hoverTriggers = document.querySelectorAll('a, button, .hover-trigger');
+        hoverTriggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            trigger.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // --- Mobile Menu Toggle ---
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if(mobileBtn) mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- Loader Logic ---
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('app-loader');
+            // หน้า score ไม่ต้องเช็ค session ก็ได้ ให้โหลดแป๊บเดียวพอให้เห็น
+            setTimeout(() => {
+                loader.classList.add('opacity-0', 'pointer-events-none');
+            }, 800);
+        });
+   // --- Evidence Modal Logic ---
+    function openEvidence(imgSrc) {
+        const modal = document.getElementById('evidence-modal');
+        const modalImg = document.getElementById('evidence-img');
+        
+        modalImg.src = imgSrc;
+        modal.classList.remove('hidden');
+        // เพิ่ม Animation เล็กน้อย
+        modalImg.classList.add('animate-fade-in-up');
+    }
+
+    function closeEvidence() {
+        const modal = document.getElementById('evidence-modal');
+        modal.classList.add('hidden');
+    }
+
+    // ปิดด้วยปุ่ม ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeEvidence();
+    });
+    </script>
+
+</body>
+</html>

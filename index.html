@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pioneer Party - สภานักเรียน</title>
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://PioneerParty.com/">
+    <meta property="og:title" content="Pioneer Party - สภานักเรียน">
+    <meta property="og:description" content="พรรค Pioneer - ผู้บุกเบิกพัฒนา รับฟังทุกปัญหา พร้อมแก้ไขไปด้วยกัน">
+    <meta property="og:image" content="images/Pioneer logo 2.png">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pioneer">
+    <link rel="apple-touch-icon" href="images/Pioneer logo 2.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+        tailwind.config = { 
+            darkMode: 'class', 
+            theme: {
+                extend: {
+                    colors: { 
+                        partyBlue: '#1e3a8a', 
+                        partyDarkBlue: '#172554',
+                        partyYellow: '#facc15',
+                        offWhite: '#fdfbf7',
+                        darkBg: '#0f172a',
+                        quoteGray: '#5a5a5a' 
+                    },
+                    boxShadow: {
+                        'pop': '6px 6px 0px 0px rgba(30, 58, 138, 1)',
+                        'pop-hover': '2px 2px 0px 0px rgba(30, 58, 138, 1)',
+                        'pop-yellow': '6px 6px 0px 0px rgba(250, 204, 21, 1)',
+                        'pop-yellow-hover': '2px 2px 0px 0px rgba(250, 204, 21, 1)',
+                        'pop-white': '4px 4px 0px 0px #ffffff',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+                    },
+                    animation: {
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'marquee': 'marquee 25s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'bounce-x': 'bounceX 1s infinite',
+                        'shimmer': 'shimmer 2.5s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+        
+        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .dark .glass-nav { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); }
+        
+        .quote-avatar-wrapper {
+            position: relative;
+            padding: 8px;
+            background: linear-gradient(135deg, #fdfbf7 0%, #e2e8f0 100%);
+            border-radius: 50%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .dark .quote-avatar-wrapper { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+    </style>
+</head>
+
+<body class="bg-offWhite dark:bg-gray-900 text-gray-900 dark:text-gray-100 overflow-x-hidden relative transition-colors duration-300 selection:bg-partyYellow selection:text-partyBlue">
+    
+    <div id="app-loader" class="fixed inset-0 z-[9999] bg-partyBlue flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="relative flex items-center justify-center gap-6 mb-8">
+            <div class="absolute inset-0 bg-partyYellow rounded-full blur-2xl animate-pulse opacity-40 scale-150"></div>
+            <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Council_Panthong_Saphanupathamnd.png" alt="Council Logo" class="w-24 h-24 md:w-32 md:h-32 relative z-10 animate-bounce drop-shadow-2xl bg-white rounded-full p-1" style="animation-delay: 0s;">
+            <img src="images/Pioneer logo 1.png" alt="Pioneer Logo" class="w-24 h-24 md:w-32 md:h-32 relative z-10 animate-bounce drop-shadow-2xl" style="animation-delay: 0.2s;">
+        </div>
+        <div class="flex flex-col items-center space-y-2">
+            <div class="flex space-x-2">
+                <div class="w-3 h-3 bg-partyYellow rounded-full animate-pulse" style="animation-delay: 0.1s"></div>
+                <div class="w-3 h-3 bg-white rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                <div class="w-3 h-3 bg-partyYellow rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
+            </div>
+            <p class="text-white font-mono text-sm tracking-widest mt-2 opacity-80 uppercase">Loading Official Council...</p>
+        </div>
+    </div>
+
+    <div class="bg-noise opacity-30 mix-blend-overlay fixed inset-0 pointer-events-none z-0"></div>
+    <div id="cursor" class="hidden md:block"></div>
+
+    <a href="score.html" class="fixed bottom-6 right-6 z-[90] group animate-bounce" style="animation-duration: 2s;">
+        <div class="relative">
+            <span class="absolute -top-2 -right-2 flex h-5 w-5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-5 w-5 bg-red-500 text-[10px] text-white font-bold items-center justify-center shadow-lg">!</span>
+            </span>
+            <div class="bg-partyYellow text-partyBlue font-black uppercase tracking-wider py-3 px-6 rounded-full border-4 border-partyBlue shadow-pop group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px] transition-all flex items-center gap-2">
+                <span class="text-2xl group-hover:rotate-12 transition-transform">🏆</span><span>ดูผลคะแนน</span>
+            </div>
+        </div>
+    </a>
+
+    <nav class="fixed top-0 left-0 right-0 z-[60] glass-nav border-b-4 border-partyBlue dark:border-gray-800 shadow-sm transition-transform duration-300 h-[68px] md:h-[76px]" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center relative z-20 h-full">
+            <a href="index.html" class="flex items-center gap-2 md:gap-3 group z-20">
+                <div class="rounded-full p-1 bg-white border-2 border-partyBlue shadow-sm group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                    <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Council_Panthong_Saphanupathamnd.png" alt="Council Logo" class="h-8 w-8 md:h-10 md:w-10 object-contain">
+                </div>
+                <div class="rounded-lg p-1 bg-partyBlue group-hover:bg-partyYellow transition-all duration-300 transform group-hover:rotate-3 shadow-sm flex-shrink-0">
+                    <img src="images/Pioneer logo 2.png" alt="Pioneer Logo" class="h-8 w-8 md:h-10 md:w-10 object-contain bg-white rounded-md">
+                </div>
+                <div class="flex flex-col leading-none font-anakotmai ml-1">
+                    <span class="text-xl md:text-2xl font-black text-partyBlue dark:text-partyYellow uppercase tracking-tighter group-hover:translate-x-1 transition-transform duration-300">Pioneer</span>
+                    <span class="text-[10px] md:text-xs font-bold text-partyYellow bg-partyBlue px-2 rounded-sm inline-block w-max transform -rotate-1 group-hover:rotate-0 transition-transform duration-300 shadow-sm">COUNCIL</span>
+                </div>
+            </a>
+
+            <ul class="hidden md:flex space-x-6 items-center font-anakotmai">
+                <li><a href="index.html" class="nav-link-active text-partyBlue dark:text-white font-bold px-3 py-1 border-b-4 border-partyYellow transition-colors">หน้าหลัก</a></li>
+                <li><a href="council-committee.html" class="text-gray-600 dark:text-gray-300 font-bold hover:text-partyBlue dark:hover:text-partyYellow px-3 py-1 transition-colors border-b-4 border-transparent hover:border-partyBlue">คณะสภานักเรียน</a></li>
+                <li><a href="pathway.html" class="text-gray-600 dark:text-gray-300 font-bold hover:text-partyBlue dark:hover:text-partyYellow px-3 py-1 transition-colors border-b-4 border-transparent hover:border-partyBlue">แผนการทำงาน</a></li>
+                <li>
+                    <a href="policy.html" class="bg-partyBlue text-white border-2 border-partyBlue px-6 py-2 font-bold shadow-[4px_4px_0px_0px_#facc15] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all inline-block rounded-sm hover:bg-partyDarkBlue">
+                        ดูนโยบาย
+                    </a>
+                </li>
+                <li>
+                    <button onclick="toggleTheme()" class="bg-gray-100 dark:bg-gray-800 p-2 rounded-full border-2 border-gray-300 dark:border-gray-600 hover:border-partyYellow transition-all group relative overflow-hidden h-10 w-10 flex items-center justify-center">
+                        <svg class="sun-icon absolute w-5 h-5 text-yellow-500 transform translate-y-12 dark:translate-y-0 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <svg class="moon-icon absolute w-5 h-5 text-partyBlue dark:translate-y-12 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                </li>
+            </ul>
+
+            <button id="mobile-menu-btn" class="md:hidden text-partyBlue dark:text-partyYellow p-2 focus:outline-none z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-partyBlue dark:bg-gray-900 border-t-2 border-partyYellow shadow-xl z-10 flex flex-col p-4 space-y-3 font-anakotmai">
+            <a href="index.html" class="block text-partyYellow font-bold text-xl py-2 border-b border-white/10 pl-2 border-l-4 border-l-partyYellow">หน้าหลัก</a>
+            <a href="council-committee.html" class="block text-white font-bold text-xl py-2 border-b border-white/10 pl-2">คณะสภานักเรียน</a>
+            <a href="pathway.html" class="block text-white font-bold text-xl py-2 border-b border-white/10 pl-2">แผนการทำงาน</a>
+            <a href="policy.html" class="block bg-partyYellow text-partyBlue font-black text-center text-xl py-3 border-2 border-white shadow-[4px_4px_0px_0px_#ffffff] mt-2">ดูนโยบาย</a>
+            <button onclick="toggleTheme()" class="flex items-center justify-between w-full text-white font-bold text-xl py-3 group pl-2">
+                <span>สลับโหมด มืด/สว่าง</span>
+                <div class="w-10 h-10 flex items-center justify-center border-2 border-white rounded-full bg-white/10">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mt-[68px] md:mt-[76px] bg-gradient-to-r from-partyBlue via-partyDarkBlue to-partyBlue dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-b-4 border-partyYellow py-3 md:py-4 z-40 relative shadow-md transition-colors duration-300 overflow-hidden">
+        <div class="absolute inset-0 bg-dot-pattern opacity-10 animate-pulse-slow"></div>
+        <div class="container mx-auto px-4 max-w-7xl relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+                <div class="flex flex-col md:flex-row items-center gap-3 md:gap-4">
+                    <div class="bg-white p-1 rounded-full shadow-md hidden sm:block">
+                        <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Council_Panthong_Saphanupathamnd.png" alt="Council Logo" class="h-8 w-8 drop-shadow-sm">
+                    </div>
+                    
+                    <div class="bg-partyYellow text-partyBlue font-black px-3 py-1 text-sm md:text-base uppercase tracking-wider flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.4)] transform hover:scale-105 transition-transform">
+                        <span class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+                        </span>
+                        OFFICIAL
+                    </div>
+                    <h2 class="text-white font-bold text-sm md:text-lg tracking-wide md:border-l-2 md:border-white/30 md:pl-4">
+                        คณะกรรมการสภานักเรียนโรงเรียนพานทองสภาชนูปถัมภ์ ประจำปีการศึกษา 2569
+                    </h2>
+                </div>
+                
+                <div class="text-partyYellow font-bold text-sm md:text-base tracking-wider flex items-center gap-2 bg-white/10 px-3 py-1 rounded-sm backdrop-blur-sm">
+                    <span class="font-mono text-white">READY TO SERVE</span> 
+                    <span class="text-partyYellow animate-pulse">●</span> 
+                    <span>พร้อมปฏิบัติหน้าที่</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="pt-12 pb-20 md:pt-20 md:pb-32 relative overflow-hidden bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div class="absolute top-20 right-10 w-32 h-32 border-8 border-partyYellow rounded-full opacity-20 animate-float hidden md:block"></div>
+        <div class="absolute bottom-20 left-10 w-24 h-24 bg-partyBlue opacity-10 transform rotate-45 animate-float-delayed hidden md:block"></div>
+        
+        <div class="marquee-container w-full absolute top-1/4 left-0 opacity-[0.03] dark:opacity-10 z-0 pointer-events-none -rotate-6 transform scale-110">
+            <div class="marquee-content text-[8rem] md:text-[12rem] font-black text-partyBlue dark:text-partyYellow uppercase">
+                PIONEER PARTY • YOUR VOICE MATTERS •
+            </div>
+        </div>
+        
+        <div class="absolute right-0 top-0 w-2/5 h-full bg-gradient-to-bl from-partyBlue to-partyDarkBlue skew-x-[-15deg] origin-top translate-x-32 z-0 hidden lg:block shadow-2xl"></div>
+        
+        <div class="container mx-auto px-4 relative z-10 flex flex-col lg:flex-row items-center gap-12">
+            <div class="w-full lg:w-3/5 text-center lg:text-left">
+                <div class="inline-block bg-partyYellow text-partyBlue px-3 py-1 font-bold text-sm mb-6 shadow-pop transform -rotate-2 reveal-on-scroll">
+                    Welcome to Official Website
+                </div>
+                <h1 class="text-6xl md:text-[8rem] lg:text-[9rem] font-black text-partyBlue dark:text-white leading-[0.85] tracking-tighter mb-6 drop-shadow-sm reveal-on-scroll" style="transition-delay: 100ms;">
+                    The <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-partyBlue to-blue-500 dark:from-partyYellow dark:to-yellow-300 relative inline-block">
+                        <span class="absolute inset-0 translate-x-1 translate-y-1 text-partyYellow dark:text-partyBlue z-[-1] opacity-50" style="-webkit-text-stroke: 0px;">Pioneer</span>
+                        <span style="-webkit-text-stroke: 2px #1e3a8a;" class="dark:[-webkit-text-stroke:2px_#facc15]">Pioneer</span>
+                    </span><br>
+                    Council
+                </h1>
+                <p class="text-xl md:text-2xl font-medium text-gray-600 dark:text-gray-300 max-w-lg mx-auto lg:mx-0 mb-10 reveal-on-scroll border-l-4 border-partyYellow pl-5 py-2 bg-gray-50 dark:bg-gray-800/50 rounded-r-lg" style="transition-delay: 200ms;">
+                    "ผู้บุกเบิกพัฒนา รับฟังทุกปัญหา<br>พร้อมแก้ไขไปด้วยกัน"
+                </p>
+                <div class="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start reveal-on-scroll" style="transition-delay: 300ms;">
+                    <a href="council-committee.html" class="hover-trigger bg-partyBlue text-white px-8 py-4 font-black text-xl shadow-pop-yellow hover:shadow-pop-yellow-hover hover:translate-x-[4px] hover:translate-y-[4px] transition-all border-2 border-partyBlue flex items-center justify-center gap-2 group">
+                        <span>ทำความรู้จักพวกเรา</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </a>
+                    <a href="policy.html" class="hover-trigger bg-white dark:bg-gray-800 text-partyBlue dark:text-partyYellow px-8 py-4 font-black text-xl border-2 border-partyBlue dark:border-partyYellow hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-pop hover:shadow-pop-hover hover:translate-x-[4px] hover:translate-y-[4px] flex items-center justify-center">
+                        ติดตามนโยบาย
+                    </a>
+                </div>
+            </div>
+            
+            <div class="w-full lg:w-2/5 relative reveal-on-scroll" style="transition-delay: 400ms;">
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-partyYellow/20 rounded-full blur-3xl z-0 animate-pulse-slow"></div>
+                <div class="relative w-72 h-[400px] md:w-80 md:h-[500px] mx-auto hover-trigger">
+                    <div class="absolute inset-0 bg-partyYellow border-2 border-partyBlue translate-x-6 translate-y-6 z-0 transition-transform duration-500 group-hover:translate-x-8 group-hover:translate-y-8"></div>
+                    <div class="absolute inset-0 bg-partyBlue border-2 border-white dark:border-gray-800 translate-x-3 translate-y-3 z-10 transition-transform duration-500 group-hover:translate-x-4 group-hover:translate-y-4"></div>
+                    
+                    <div class="absolute inset-0 bg-gray-200 dark:bg-gray-700 border-2 border-partyBlue z-20 overflow-hidden group">
+                         <img src="images/student_council_group_background/Student_Council_President_.png" class="w-full h-full object-cover transition-transform duration-700 cursor-pointer scale-100 group-hover:scale-110" alt="President">
+                         <div class="absolute inset-0 bg-gradient-to-t from-partyBlue/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    
+                    <div class="absolute -bottom-6 -left-6 z-30 bg-partyYellow text-partyBlue border-2 border-partyBlue px-5 py-2 font-black text-xl md:text-2xl -rotate-6 shadow-pop transform hover:rotate-0 transition-all duration-300 hover:scale-110 flex items-center gap-2">
+                        <span class="text-2xl">⭐</span> President
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-20 md:py-28 bg-gray-50 dark:bg-gray-900 border-t-8 border-partyBlue relative transition-colors duration-300 overflow-hidden">
+        <div class="absolute right-[-5%] top-[-5%] w-64 h-64 border-[1rem] border-partyYellow rounded-full opacity-20 animate-spin-slow"></div>
+        
+        <div class="container mx-auto px-4 max-w-7xl relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 reveal-on-scroll">
+                <div>
+                    <span class="text-partyBlue dark:text-partyYellow font-bold tracking-widest uppercase text-sm mb-2 block">Updates & Activities</span>
+                    <h2 class="text-4xl md:text-5xl font-black text-partyBlue dark:text-white border-l-8 border-partyYellow pl-5 py-1">📢 วารสารและประกาศ</h2>
+                </div>
+                <a href="news.html" class="mt-6 md:mt-0 group flex items-center gap-2 text-partyBlue dark:text-partyYellow font-bold hover:underline bg-white dark:bg-gray-800 px-4 py-2 border-2 border-partyBlue shadow-pop-yellow hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
+                    ดูทั้งหมด <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-800 border-2 border-partyBlue flex flex-col shadow-pop hover:-translate-y-3 hover:shadow-[10px_10px_0px_0px_rgba(250,204,21,1)] transition-all duration-300 reveal-on-scroll group relative" style="transition-delay: 100ms;">
+                    <div class="absolute top-4 -left-4 bg-partyYellow text-partyBlue font-black px-4 py-1 border-2 border-partyBlue z-20 shadow-sm transform -rotate-3 group-hover:rotate-0 transition-transform">
+                        NEW
+                    </div>
+                    <div class="w-full aspect-[1587/2245] overflow-hidden border-b-2 border-partyBlue bg-gray-200 dark:bg-gray-700 relative">
+                        <img src="images/วารสาร/PSC_เปิดเทอม1_69.png" alt="ภาพวารสาร 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
+                        <div class="absolute inset-0 bg-partyBlue/10 group-hover:bg-transparent transition-colors duration-300"></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <span class="inline-block text-gray-500 dark:text-gray-400 text-sm font-bold mb-2 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            9 พฤษภาคม 2569
+                        </span>
+                        <h3 class="text-xl font-black text-partyBlue dark:text-white mb-3 line-clamp-2 group-hover:text-partyYellow transition-colors">สิ้นสุดการรอคอย! ต้อนรับการเปิดภาคเรียนที่ 1/2569 🎒🏫</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 text-sm leading-relaxed">เปิดภาคเรียนที่ 1/2569 <br>ในวันที่ 15 พฤษภาคมนี้!</p>
+                    </div>
+                    <div class="p-6 pt-0 mt-auto">
+                        <a href="news.html?id=9" class="inline-block text-partyBlue dark:text-partyYellow font-bold border-b-2 border-partyBlue dark:border-partyYellow pb-1 hover:bg-partyYellow hover:text-partyBlue hover:border-transparent transition-all">อ่านเพิ่มเติม ➔</a>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 border-2 border-partyBlue flex flex-col shadow-pop hover:-translate-y-3 hover:shadow-[10px_10px_0px_0px_rgba(250,204,21,1)] transition-all duration-300 reveal-on-scroll group" style="transition-delay: 200ms;">
+                    <div class="w-full aspect-[1587/2245] overflow-hidden border-b-2 border-partyBlue bg-gray-200 dark:bg-gray-700 relative">
+                        <img src="images/วารสาร/PSC_SAPA_NEWS_ งานสภานักเรียนประชาสัมพันธ์_ฉบับที่ _7_.png" alt="ภาพวารสาร 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <span class="inline-block text-gray-500 dark:text-gray-400 text-sm font-bold mb-2 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            7 พฤษภาคม 2569
+                        </span>
+                        <h3 class="text-xl font-black text-partyBlue dark:text-white mb-3 line-clamp-2 group-hover:text-partyYellow transition-colors">วารสารฉบับที่ 7: ศึกษาดูงานและลงนามบันทึกข้อตกลง</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 text-sm leading-relaxed">สภานักเรียนฯ ศึกษาดูงานแลกเปลี่ยนเรียนรู้ และลงนาม MOU เชื่อมความสัมพันธ์สภานักเรียนต้นแบบ ณ โรงเรียนวัดทรงธรรม จ.สมุทรปราการ</p>
+                    </div>
+                    <div class="p-6 pt-0 mt-auto">
+                        <a href="news.html?id=7" class="inline-block text-partyBlue dark:text-partyYellow font-bold border-b-2 border-partyBlue dark:border-partyYellow pb-1 hover:bg-partyYellow hover:text-partyBlue hover:border-transparent transition-all">อ่านเพิ่มเติม ➔</a>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 border-2 border-partyBlue flex flex-col shadow-pop hover:-translate-y-3 hover:shadow-[10px_10px_0px_0px_rgba(250,204,21,1)] transition-all duration-300 reveal-on-scroll group" style="transition-delay: 300ms;">
+                    <div class="w-full aspect-[1587/2245] overflow-hidden border-b-2 border-partyBlue bg-gray-200 dark:bg-gray-700 relative">
+                        <img src="images/วารสาร/PSC_SAPA_NEWS_ งานสภานักเรียนประชาสัมพันธ์_ฉบับที่ _6_.png" alt="ภาพวารสาร 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <span class="inline-block text-gray-500 dark:text-gray-400 text-sm font-bold mb-2 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            "6 พฤษภาคม 2569
+                        </span>
+                        <h3 class="text-xl font-black text-partyBlue dark:text-white mb-3 line-clamp-2 group-hover:text-partyYellow transition-colors">วารสารฉบับที่ 6: กิจกรรมค่ายพัฒนาศักยภาพผู้นำนักเรียน ประจำปีการศึกษา 2569</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 text-sm leading-relaxed">ค่ายพัฒนาศักยภาพผู้นำนักเรียน เรียนรู้ PSC Model และ Student Council Blueprint เพื่อสานต่อการปฏิบัติหน้าที่สภานักเรียน</p>
+                    </div>
+                    <div class="p-6 pt-0 mt-auto">
+                        <a href="news.html?id=6" class="inline-block text-partyBlue dark:text-partyYellow font-bold border-b-2 border-partyBlue dark:border-partyYellow pb-1 hover:bg-partyYellow hover:text-partyBlue hover:border-transparent transition-all">อ่านเพิ่มเติม ➔</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <section class="py-20 md:py-28 bg-white dark:bg-gray-800 relative transition-colors duration-300">
+        <div class="absolute left-0 top-1/2 -translate-y-1/2 w-32 h-64 bg-partyBlue rounded-r-full opacity-10"></div>
+        <div class="container mx-auto px-4 max-w-5xl relative z-10">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <span class="text-gray-500 dark:text-gray-400 font-bold tracking-widest uppercase text-sm mb-2 block">Our Promises</span>
+                <h2 class="text-4xl md:text-5xl font-black text-partyBlue dark:text-white inline-block bg-partyYellow/20 px-6 py-3 border-4 border-partyBlue dark:border-partyYellow transform -rotate-2 shadow-pop relative">
+                    <span class="absolute -top-6 -left-6 text-4xl animate-bounce">🚀</span>
+                    อัปเดตนโยบายล่าสุด
+                </h2>
+                <p class="mt-6 text-gray-600 dark:text-gray-300 font-medium text-lg">ติดตามสถานะนโยบายที่พวกเรากำลังผลักดันให้เกิดขึ้นจริง</p>
+            </div>
+
+            <div class="space-y-8">
+                <div class="bg-gray-50 dark:bg-gray-900 border-2 border-partyBlue p-6 md:p-8 shadow-pop-yellow relative overflow-hidden reveal-on-scroll group min-h-[140px] flex flex-col justify-center hover:-translate-x-2 hover:-translate-y-2 hover:shadow-[10px_10px_0px_0px_rgba(250,204,21,1)] transition-all">
+                    <div class="absolute top-4 right-4 md:top-8 md:right-8 border-4 border-orange-500 text-orange-500 font-black text-lg md:text-2xl px-4 py-1 transform rotate-12 z-10 shadow-sm bg-white/90 dark:bg-gray-900/90 rounded-sm group-hover:scale-110 transition-transform duration-300">
+                        กำลังดำเนินการ
+                    </div>
+                    
+                    <div class="pr-32 md:pr-56 relative z-20 border-l-4 border-orange-500 pl-4">
+                        <h3 class="text-2xl md:text-3xl font-black text-partyBlue dark:text-white flex items-center gap-3 mb-3">
+                            <span class="text-3xl bg-white dark:bg-gray-800 p-2 border-2 border-partyBlue shadow-sm">🎵</span> 
+                            เพิ่มโซนดนตรีและจุดพักผ่อน
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg">กำลังอยู่ในขั้นตอนการยื่นเอกสารขออนุมัติพื้นที่บริเวณลานกิจกรรมจากทางโรงเรียน และจัดเตรียมอุปกรณ์เครื่องดนตรีส่วนกลาง</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-gray-900 border-2 border-partyBlue p-6 md:p-8 shadow-pop-yellow relative overflow-hidden reveal-on-scroll group min-h-[140px] flex flex-col justify-center hover:-translate-x-2 hover:-translate-y-2 hover:shadow-[10px_10px_0px_0px_rgba(250,204,21,1)] transition-all" style="transition-delay: 100ms;">
+                    <div class="absolute top-4 right-4 md:top-8 md:right-8 border-4 border-green-600 text-green-600 font-black text-lg md:text-2xl px-4 py-1 transform -rotate-6 z-10 shadow-sm bg-white/90 dark:bg-gray-900/90 rounded-sm group-hover:scale-110 transition-transform duration-300">
+                        สำเร็จแล้ว
+                    </div>
+                    
+                    <div class="pr-32 md:pr-56 relative z-20 border-l-4 border-green-600 pl-4">
+                        <h3 class="text-2xl md:text-3xl font-black text-partyBlue dark:text-white flex items-center gap-3 mb-3">
+                            <span class="text-3xl bg-white dark:bg-gray-800 p-2 border-2 border-partyBlue shadow-sm">📋</span> 
+                            กล่องรับเรื่องร้องเรียนออนไลน์
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-base md:text-lg">เปิดใช้งานระบบรับฟังความคิดเห็นผ่านเว็บไซต์อย่างเป็นทางการ นักเรียนทุกคนสามารถส่งเรื่องร้องเรียนได้ตลอด 24 ชั่วโมง</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-gray-900 border-2 border-partyBlue p-6 md:p-8 shadow-pop-yellow relative overflow-hidden reveal-on-scroll group min-h-[140px] flex flex-col justify-center hover:-translate-x-2 hover:-translate-y-2 hover:shadow-[10px_10px_0px_0px_rgba(250,204,21,1)] transition-all" style="transition-delay: 200ms;">
+                    <div class="absolute top-4 right-4 md:top-8 md:right-8 border-4 border-red-600 text-red-600 font-black text-lg md:text-2xl px-4 py-1 transform rotate-6 z-10 shadow-sm bg-white/90 dark:bg-gray-900/90 rounded-sm group-hover:scale-110 transition-transform duration-300">
+                        ไม่ผ่านการอนุมัติ
+                    </div>
+                    
+                    <div class="pr-32 md:pr-56 relative z-20 border-l-4 border-red-600 pl-4 opacity-70 group-hover:opacity-100 transition-opacity">
+                        <h3 class="text-2xl md:text-3xl font-black text-partyBlue dark:text-gray-300 flex items-center gap-3 mb-3 line-through decoration-red-500 decoration-4">
+                            <span class="text-3xl bg-white dark:bg-gray-800 p-2 border-2 border-partyBlue shadow-sm no-underline inline-block">👕</span> 
+                            วันศุกร์ใส่ชุดไปรเวท
+                        </h3>
+                        <p class="text-gray-500 dark:text-gray-500 text-base md:text-lg">ทางผู้บริหารไม่อนุมัติโครงการนี้เนื่องจากขัดต่อระเบียบกระทรวงฯ อย่างไรก็ตาม สภาฯ จะพยายามผลักดันเสื้อกิจกรรมแทนในอนาคต</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 reveal-on-scroll">
+                <a href="policy.html" class="inline-flex items-center gap-3 bg-partyBlue text-white border-2 border-partyBlue px-8 py-4 font-black text-lg hover:bg-partyYellow hover:text-partyBlue transition-colors shadow-pop group">
+                    ดูนโยบายทั้งหมด <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:translate-x-2 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 md:py-28 bg-gradient-to-b from-partyBlue to-partyDarkBlue dark:from-gray-950 dark:to-gray-900 text-white relative overflow-hidden transition-colors duration-300 border-t-8 border-partyYellow">
+        <div class="absolute inset-0 bg-noise opacity-10 mix-blend-overlay"></div>
+        <div class="absolute left-10 top-10 text-4xl opacity-20 animate-float">✉️</div>
+        <div class="absolute right-20 bottom-20 text-5xl opacity-20 animate-float-delayed">💡</div>
+        <div class="absolute left-[10%] bottom-[10%] w-64 h-64 bg-partyYellow rounded-full opacity-10 blur-3xl"></div>
+        
+        <div class="container mx-auto px-4 max-w-4xl relative z-10 reveal-on-scroll">
+            <div class="text-center mb-12">
+                <div class="text-6xl mb-6 animate-bounce-x inline-block drop-shadow-lg">📮</div>
+                <h2 class="text-4xl md:text-6xl font-black text-partyYellow drop-shadow-md mb-4 tracking-tight">ตู้ ปณ. Pioneer</h2>
+                <p class="text-lg md:text-xl font-medium max-w-2xl mx-auto opacity-90">พบปัญหา? มีข้อเสนอแนะ? หรืออยากให้โรงเรียนมีอะไรเพิ่ม พิมพ์ส่งมาให้พวกเราได้เลย (ข้อมูลของคุณจะถูกเก็บเป็นความลับ)</p>
+            </div>
+
+            <form action="#" method="POST" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-8 md:p-12 border-4 border-partyYellow shadow-[12px_12px_0px_0px_#facc15] transform rotate-1 hover:rotate-0 transition-transform duration-300 relative z-20">
+                <div class="absolute -top-3 -left-3 w-6 h-6 bg-partyBlue rounded-full border-2 border-white shadow-md"></div>
+                <div class="absolute -top-3 -right-3 w-6 h-6 bg-partyBlue rounded-full border-2 border-white shadow-md"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block font-bold mb-2 text-partyBlue dark:text-yellow-400 text-lg">ชื่อ-นามสกุล <span class="text-sm font-normal text-gray-500">(นามแฝงก็ได้)</span></label>
+                        <input type="text" name="name" placeholder="ระบุชื่อ..." required class="w-full border-2 border-gray-300 p-4 focus:border-partyBlue focus:ring-4 focus:ring-partyBlue/20 focus:outline-none dark:bg-gray-700 dark:border-gray-600 transition-all rounded-sm text-lg">
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-2 text-partyBlue dark:text-yellow-400 text-lg">ระดับชั้น</label>
+                        <select name="grade" class="w-full border-2 border-gray-300 p-4 focus:border-partyBlue focus:ring-4 focus:ring-partyBlue/20 focus:outline-none dark:bg-gray-700 dark:border-gray-600 transition-all rounded-sm text-lg font-anakotmai">
+                            <option value="">-- เลือกระดับชั้น --</option>
+                            <option value="m1">มัธยมศึกษาปีที่ 1</option>
+                            <option value="m2">มัธยมศึกษาปีที่ 2</option>
+                            <option value="m3">มัธยมศึกษาปีที่ 3</option>
+                            <option value="m4">มัธยมศึกษาปีที่ 4</option>
+                            <option value="m5">มัธยมศึกษาปีที่ 5</option>
+                            <option value="m6">มัธยมศึกษาปีที่ 6</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label class="block font-bold mb-2 text-partyBlue dark:text-yellow-400 text-lg">หัวข้อเรื่อง</label>
+                    <input type="text" name="subject" placeholder="เรื่องที่ต้องการเสนอ..." required class="w-full border-2 border-gray-300 p-4 focus:border-partyBlue focus:ring-4 focus:ring-partyBlue/20 focus:outline-none dark:bg-gray-700 dark:border-gray-600 transition-all rounded-sm text-lg">
+                </div>
+                <div class="mb-8">
+                    <label class="block font-bold mb-2 text-partyBlue dark:text-yellow-400 text-lg">รายละเอียด</label>
+                    <textarea name="message" rows="5" placeholder="พิมพ์ข้อความของคุณที่นี่..." required class="w-full border-2 border-gray-300 p-4 focus:border-partyBlue focus:ring-4 focus:ring-partyBlue/20 focus:outline-none dark:bg-gray-700 dark:border-gray-600 transition-all rounded-sm text-lg resize-none"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-partyBlue text-white font-black text-xl px-12 py-5 w-full md:w-auto border-2 border-partyBlue shadow-[6px_6px_0px_0px_#1e3a8a] hover:bg-partyYellow hover:text-partyBlue hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all flex items-center justify-center gap-3 mx-auto">
+                        ส่งข้อความ <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform -rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="py-20 md:py-28 bg-gray-50 dark:bg-gray-900 relative flex items-center justify-center overflow-hidden transition-colors duration-300">
+        <div class="absolute inset-0 bg-dot-pattern opacity-5"></div>
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 bg-partyYellow opacity-10 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4 relative z-10 reveal-on-scroll">
+            <div class="max-w-5xl mx-auto bg-white dark:bg-gray-800 text-partyBlue dark:text-white border-4 border-partyBlue dark:border-gray-600 shadow-pop dark:shadow-none relative transform hover:-translate-y-2 transition-transform duration-500 group">
+                <div class="bg-partyBlue text-white font-bold px-6 py-4 text-xl md:text-3xl uppercase tracking-widest border-b-4 border-partyYellow flex justify-between items-center">
+                    <span class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div> 
+                        Message from President
+                    </span>
+                    <span class="text-partyYellow opacity-50 font-serif text-4xl leading-none">"</span>
+                </div>
+                
+                <div class="p-8 md:p-16 flex flex-col md:flex-row gap-10 md:gap-16 items-center md:items-start bg-offWhite dark:bg-gray-700/30">
+                    <div class="w-full md:w-1/3 flex flex-col items-center text-center">
+                        <div class="relative mb-6 group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-partyYellow transform rotate-6 z-0 border-2 border-partyBlue"></div>
+                            <div class="bg-white text-partyBlue w-48 h-48 md:w-56 md:h-56 flex items-center justify-center font-black text-7xl relative z-10 shadow-pop border-4 border-partyBlue overflow-hidden">
+                                 <img src="images/student_council_group_background/Student_Council_President_.png" alt="รูปประธานนักเรียน" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <h3 class="text-partyBlue dark:text-white font-black text-2xl md:text-3xl uppercase leading-none mb-2">พาขวัญ นวลสำลี</h3>
+                        <p class="bg-partyYellow text-partyBlue px-3 py-1 font-bold text-sm inline-block shadow-sm">ประธานสภานักเรียน</p>
+                    </div>
+                    
+                    <div class="w-full md:w-2/3 relative mt-4 md:mt-0">
+                        <span class="absolute -top-10 -left-6 md:-top-16 md:-left-10 text-[8rem] md:text-[10rem] text-partyBlue/10 dark:text-white/5 font-serif leading-none select-none">“</span>
+                        <h4 class="text-2xl md:text-3xl font-black text-partyBlue dark:text-partyYellow mb-8 border-b-4 border-partyYellow inline-block pb-2 relative z-10">เรียน เพื่อนนักเรียนทุกคน</h4>
+                        <div class="space-y-5 text-lg md:text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300 text-justify relative z-10">
+                            <p>การเข้ามาทำหน้าที่ในครั้งนี้ เกิดจากความตั้งใจที่จะทำให้โรงเรียนของเรา <span class="bg-partyYellow/30 dark:bg-partyYellow/20 px-2 py-1 text-partyBlue dark:text-partyYellow font-bold rounded-sm inline-block transform -rotate-1">เป็นพื้นที่ที่ทุกคนรู้สึกว่าเสียงของตัวเองมีความหมาย</span></p>
+                            <p>ดิฉันเชื่อว่าไม่ใช่ทุกคนที่กล้าพูด หน้าที่ของสภาฯ จึงไม่ใช่แค่การเสนอไอเดีย แต่คือการรับฟังและเป็นพื้นที่ตรงกลางที่ทุกคนเข้ามาได้อย่างสบายใจ</p>
+                            <p>พวกเราจะพยายามผลักดันทุกนโยบายอย่างเต็มที่ภายใต้ความเป็นไปได้ และจะสื่อสารความคืบหน้าให้ทุกคนทราบอย่างโปร่งใส</p>
+                            <p>ดิฉันและทีมงานทุกคนขอขอบคุณทุกความไว้วางใจ และพร้อมที่จะทำหน้าที่ <span class="font-black text-white bg-partyBlue px-3 py-1 shadow-[2px_2px_0px_0px_#facc15] inline-block hover:scale-105 transition-transform">สภานักเรียน</span> เพื่อทุกคนค่ะ</p>
+                        </div>
+                        <div class="mt-12 text-right border-t-2 border-gray-200 dark:border-gray-600 pt-6">
+                            <p class="font-bold text-lg text-gray-500 dark:text-gray-400">ด้วยความเคารพและความตั้งใจ</p>
+                            <h2 class="text-4xl md:text-5xl font-black text-partyBlue dark:text-white tracking-tight mt-2 inline-block transform -rotate-2 group-hover:rotate-0 transition-transform">คณะสภานักเรียนฯ</h2>
+                            <h2 class="text-4xl md:text-5xl font-black text-partyBlue dark:text-white tracking-tight mt-2 inline-block transform -rotate-2 group-hover:rotate-0 transition-transform">ปีการศึกษา 2569</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-4 md:h-6 w-full bg-stripes border-t-4 border-partyBlue dark:border-gray-800"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="bg-offWhite dark:bg-gray-900 pt-32 pb-24 relative transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-4 relative z-10 reveal-on-scroll">
+            
+            <div class="bg-quoteGray dark:bg-gray-800 text-white relative shadow-2xl rounded-sm border-b-8 border-partyYellow">
+                
+                <div class="absolute -top-20 left-1/2 transform -translate-x-1/2 z-20">
+                    <div class="quote-avatar-wrapper">
+                        <img id="quote-image" src="" alt="Member" class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-inner bg-white">
+                    </div>
+                </div>
+
+                <div class="pt-24 pb-16 px-6 md:px-16 text-center relative overflow-hidden">
+                    <span class="absolute top-10 left-10 text-[10rem] md:text-[15rem] font-serif leading-none opacity-5 text-white select-none">“</span>
+                    
+                    <h2 id="quote-text" class="text-2xl md:text-4xl lg:text-5xl font-medium text-white mb-8 relative z-10 leading-snug tracking-wide font-serif">
+                        </h2>
+                    
+                    <div class="relative z-10 flex flex-col items-center justify-center">
+                        <div class="w-16 h-1 bg-partyYellow mb-6 rounded-full"></div>
+                        <div class="flex flex-col md:flex-row items-center gap-2 md:gap-3 text-lg md:text-xl">
+                            <span id="quote-name" class="font-bold text-white"></span>
+                            <span class="hidden md:inline text-gray-400">|</span>
+                            <span id="quote-role" class="text-gray-300 font-medium"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <button id="install-pwa-btn" class="hidden fixed bottom-4 left-4 z-50 bg-partyYellow text-partyBlue border-2 border-partyBlue dark:border-white px-4 py-2 font-black shadow-pop rounded-lg animate-bounce hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
+    ⬇️ ติดตั้งแอป
+    </button>
+
+    <footer class="bg-partyBlue dark:bg-gray-950 text-white py-16 relative shadow-[0_-10px_40px_rgba(0,0,0,0.3)] z-50 overflow-hidden transition-colors duration-300">
+        <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-partyYellow via-orange-400 to-partyYellow"></div>
+        <div class="absolute -right-10 -bottom-20 w-80 h-80 border-8 border-partyYellow rounded-full opacity-10"></div>
+        <div class="absolute left-10 top-20 w-32 h-32 border-4 border-white rounded-full opacity-5"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-10 md:gap-0 relative z-10"> 
+            
+            <div class="flex-shrink-0 order-2 md:order-1 flex items-center justify-center hover-trigger group">
+                <div class="bg-white p-2 rounded-full -rotate-6 group-hover:rotate-0 transition-all duration-300 shadow-[4px_4px_0px_0px_#ffffff] w-20 h-20 md:w-28 md:h-28 flex items-center justify-center border-4 border-partyBlue group-hover:scale-105 relative z-10">
+                    <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Council_Panthong_Saphanupathamnd.png" alt="Council Logo" class="w-full h-full object-contain drop-shadow-sm">
+                </div>
+                <div class="bg-white p-3 rounded-xl rotate-6 group-hover:rotate-0 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(250,204,21,1)] w-20 h-20 md:w-28 md:h-28 flex items-center justify-center border-4 border-partyBlue group-hover:scale-105 -ml-6 md:-ml-8 relative z-0">
+                    <img src="images/Pioneer logo 3.png" alt="Pioneer Logo" class="w-full h-full object-contain">
+                </div>
+            </div>
+            
+            <div class="text-center order-1 md:order-2 flex-grow">
+                <h3 class="font-marker text-3xl md:text-5xl lg:text-6xl text-white mb-2 tracking-wide leading-tight drop-shadow-lg">Follow us & get to know Pioneer</h3>
+                <p class="font-marker text-partyYellow text-2xl md:text-4xl mb-4 leading-tight drop-shadow-md">Because every voice matters</p>
+                <div class="flex justify-center gap-3 mt-6">
+                     <span class="w-3 h-3 bg-white rounded-full animate-bounce" style="animation-delay: 0s"></span>
+                     <span class="w-3 h-3 bg-partyYellow rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                     <span class="w-3 h-3 bg-white rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
+                </div>
+                <p class="text-sm opacity-60 mt-6 text-gray-300 font-mono tracking-widest uppercase">System Version <span id="app-version"></span></p>
+            </div>
+            
+            <div class="flex flex-col items-center md:items-end gap-3 order-3 md:order-3 flex-shrink-0">
+                
+                <span class="text-xs md:text-sm font-black text-partyBlue uppercase tracking-widest bg-partyYellow px-4 py-1 rounded-sm shadow-sm mb-1 mt-2 md:mt-0">พรรค Pioneer</span>
+                
+                <a href="https://instagram.com/thepioneerpsc" target="_blank" class="hover-trigger flex items-center gap-4 text-white hover:text-partyYellow transition-colors group">
+                    <span class="font-bold text-lg md:text-xl group-hover:-translate-x-2 transition-transform tracking-wide">thepioneerpsc</span>
+                    <div class="bg-white text-partyBlue p-2 md:p-3 rounded-full border-2 border-partyBlue group-hover:bg-partyYellow transition-all shadow-[2px_2px_0px_0px_rgba(250,204,21,1)] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </div>
+                </a>
+                
+                <a href="https://tiktok.com/@thepioneerpsc" target="_blank" class="hover-trigger flex items-center gap-4 text-white hover:text-partyYellow transition-colors group">
+                    <span class="font-bold text-lg md:text-xl group-hover:-translate-x-2 transition-transform tracking-wide">thepioneerpsc</span>
+                    <div class="bg-white text-partyBlue p-2 md:p-3 rounded-full border-2 border-partyBlue group-hover:bg-partyYellow transition-all shadow-[2px_2px_0px_0px_rgba(250,204,21,1)] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+                    </div>
+                </a>
+
+                <span class="text-xs md:text-sm font-black text-partyBlue uppercase tracking-widest bg-white px-4 py-1 rounded-sm shadow-sm mt-4 mb-1">สภานักเรียนพานทองฯ</span>
+                
+                <a href="https://www.instagram.com/deksapa.psc/" target="_blank" class="hover-trigger flex items-center gap-4 text-white hover:text-partyYellow transition-colors group">
+                    <span class="font-bold text-lg md:text-xl group-hover:-translate-x-2 transition-transform tracking-wide">deksapa.psc</span>
+                    <div class="bg-white text-partyBlue p-2 md:p-3 rounded-full border-2 border-partyBlue group-hover:bg-partyYellow transition-all shadow-[2px_2px_0px_0px_#ffffff] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </div>
+                </a>
+                
+                <a href="https://www.facebook.com/profile.php?id=100063788612433" target="_blank" class="hover-trigger flex items-center gap-4 text-white hover:text-partyYellow transition-colors group">
+                    <span class="font-bold text-lg md:text-xl group-hover:-translate-x-2 transition-transform tracking-wide">Facebook Page</span>
+                    <div class="bg-white text-partyBlue p-2 md:p-3 rounded-full border-2 border-partyBlue group-hover:bg-partyYellow transition-all shadow-[2px_2px_0px_0px_#ffffff] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </div>
+                </a>
+
+            </div>
+            
+        </div>
+    </footer>
+
+    <script>
+        // --- Core Logic & Theme ---
+        const html = document.documentElement;
+        function updateIcons(isDark) {
+            document.querySelectorAll('.sun-icon').forEach(el => isDark ? el.classList.remove('hidden') : el.classList.add('hidden'));
+            document.querySelectorAll('.moon-icon').forEach(el => isDark ? el.classList.add('hidden') : el.classList.remove('hidden'));
+        }
+        function checkTheme() {
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark'); updateIcons(true);
+            } else {
+                html.classList.remove('dark'); updateIcons(false);
+            }
+        }
+        checkTheme();
+        function toggleTheme() {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark'); localStorage.setItem('theme', 'light'); updateIcons(false);
+            } else {
+                html.classList.add('dark'); localStorage.setItem('theme', 'dark'); updateIcons(true);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Scroll Reveal Animation ---
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObserver.observe(el));
+            
+            // --- Navbar Glass Effect on Scroll ---
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-md');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                }
+            });
+        });
+
+        // --- UI Interactions ---
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            if(cursor) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            }
+        });
+        document.querySelectorAll('a, button, .hover-trigger, input, select, textarea').forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => cursor && cursor.classList.add('hovered'));
+            trigger.addEventListener('mouseleave', () => cursor && cursor.classList.remove('hovered'));
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
+
+        // Loader logic
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('app-loader');
+            const delay = sessionStorage.getItem('visited') ? 500 : 2500;
+            setTimeout(() => {
+                if(loader) loader.classList.add('opacity-0', 'pointer-events-none');
+                sessionStorage.setItem('visited', 'true');
+            }, delay);
+        });
+
+        // PWA & Version
+        const versionEl = document.getElementById('app-version');
+        if(versionEl) versionEl.innerText = "3.0.0"; 
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => { 
+            e.preventDefault(); 
+            deferredPrompt = e; 
+            const btn = document.getElementById('install-pwa-btn');
+            if(btn) btn.classList.remove('hidden'); 
+        });
+        const installBtn = document.getElementById('install-pwa-btn');
+        if(installBtn) {
+            installBtn.addEventListener('click', () => { deferredPrompt.prompt(); });
+        }
+    </script>
+    
+    <script src="random-quote.js"></script>
+    
+</body>
+</html>

@@ -29,7 +29,7 @@
                     colors: { 
                         partyBlue: '#1e3a8a', 
                         partyDarkBlue: '#172554',
-                        partyYellow: '#facc15',
+                        partyYellow: '#f472b6',
                         offWhite: '#fdfbf7',
                         darkBg: '#0f172a'
                     },
@@ -41,7 +41,7 @@
                     boxShadow: {
                         'pop': '6px 6px 0px 0px rgba(30, 58, 138, 1)',
                         'pop-hover': '2px 2px 0px 0px rgba(30, 58, 138, 1)',
-                        'pop-yellow': '6px 6px 0px 0px rgba(250, 204, 21, 1)',
+                        'pop-yellow': '6px 6px 0px 0px rgba(244, 114, 182, 1)',
                         'pop-white': '4px 4px 0px 0px #ffffff',
                     },
                     animation: {
@@ -75,11 +75,11 @@
         
         #cursor {
             position: fixed; top: 0; left: 0; width: 20px; height: 20px;
-            background-color: rgba(250, 204, 21, 0.6); border-radius: 50%;
+            background-color: rgba(244, 114, 182, 0.6); border-radius: 50%;
             pointer-events: none; transform: translate(-50%, -50%);
             transition: width 0.2s, height 0.2s, background-color 0.2s; z-index: 9999;
         }
-        #cursor.hovered { width: 50px; height: 50px; background-color: rgba(250, 204, 21, 0.3); border: 2px solid #facc15; }
+        #cursor.hovered { width: 50px; height: 50px; background-color: rgba(244, 114, 182, 0.3); border: 2px solid #f472b6; }
 
         /* Glass Navbar (เหมือน Index) */
         .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
@@ -90,7 +90,7 @@
             background-image: linear-gradient(to right, rgba(30, 58, 138, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(30, 58, 138, 0.05) 1px, transparent 1px);
         }
         .dark .bg-grid-pattern {
-            background-image: linear-gradient(to right, rgba(250, 204, 21, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(250, 204, 21, 0.05) 1px, transparent 1px);
+            background-image: linear-gradient(to right, rgba(244, 114, 182, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(244, 114, 182, 0.05) 1px, transparent 1px);
         }
     </style>
 </head>
@@ -99,8 +99,8 @@
     <div id="app-loader" class="fixed inset-0 z-[9999] bg-partyBlue flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="relative flex items-center justify-center gap-6 mb-8">
             <div class="absolute inset-0 bg-partyYellow rounded-full blur-2xl animate-pulse opacity-40 scale-150"></div>
-            <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Council_Panthong_Saphanupathamnd.png" alt="Council Logo" class="w-24 h-24 md:w-32 md:h-32 relative z-10 animate-bounce drop-shadow-2xl bg-white rounded-full p-1">
-            <img src="images/Pioneer logo 1.png" alt="Pioneer Logo" class="w-24 h-24 md:w-32 md:h-32 relative z-10 animate-bounce drop-shadow-2xl" style="animation-delay: 0.2s;">
+            <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Panthong_Saphanupathamnd.png" alt="School Logo" class="w-24 h-24 md:w-32 md:h-32 relative z-10 animate-bounce drop-shadow-2xl bg-white rounded-full p-1">
+            <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Council_Panthong_Saphanupathamnd.png" alt="Council Logo" class="w-24 h-24 md:w-32 md:h-32 relative z-10 animate-bounce drop-shadow-2xl bg-white rounded-full p-1" style="animation-delay: 0.2s;">
         </div>
         <p class="text-white font-mono text-sm tracking-widest mt-2 opacity-80 uppercase">Loading Directory...</p>
     </div>
@@ -112,14 +112,14 @@
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center relative z-20 h-full">
             <a href="index.html" class="flex items-center gap-2 md:gap-3 group z-20 hover-trigger">
                 <div class="rounded-full p-1 bg-white border-2 border-partyBlue shadow-sm group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                    <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Panthong_Saphanupathamnd.png" alt="School Logo" class="h-8 w-8 md:h-10 md:w-10 object-contain">
+                </div>
+                <div class="rounded-full p-1 bg-white border-2 border-partyBlue group-hover:border-partyPink transition-all duration-300 transform group-hover:rotate-3 shadow-sm flex-shrink-0">
                     <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Council_Panthong_Saphanupathamnd.png" alt="Council Logo" class="h-8 w-8 md:h-10 md:w-10 object-contain">
                 </div>
-                <div class="rounded-lg p-1 bg-partyBlue group-hover:bg-partyYellow transition-all duration-300 transform group-hover:rotate-3 shadow-sm flex-shrink-0">
-                    <img src="images/Pioneer logo 2.png" alt="Pioneer Logo" class="h-8 w-8 md:h-10 md:w-10 object-contain bg-white rounded-md">
-                </div>
-                <div class="flex flex-col leading-none font-anakotmai ml-1">
-                    <span class="text-xl md:text-2xl font-black text-partyBlue dark:text-partyYellow uppercase tracking-tighter group-hover:translate-x-1 transition-transform duration-300">Pioneer</span>
-                    <span class="text-[10px] md:text-xs font-bold text-partyYellow bg-partyBlue px-2 rounded-sm inline-block w-max transform -rotate-1 group-hover:rotate-0 transition-transform duration-300 shadow-sm">COUNCIL</span>
+                <div class="flex flex-col leading-tight font-anakotmai ml-1">
+                    <span class="text-base md:text-xl font-black text-partyBlue dark:text-partyPink tracking-tight group-hover:translate-x-1 transition-transform duration-300">สภานักเรียน</span>
+                    <span class="text-[10px] md:text-xs font-bold text-gray-600 dark:text-gray-300 truncate max-w-[150px] md:max-w-xs transition-transform duration-300">โรงเรียนพานทองสภาชนูปถัมภ์</span>
                 </div>
             </a>
 
@@ -128,13 +128,13 @@
                 <li><a href="council-committee.html" class="nav-link-active text-partyBlue dark:text-white font-bold px-3 py-1 border-b-4 border-partyYellow transition-colors hover-trigger">คณะสภานักเรียน</a></li>
                 <li><a href="pathway.html" class="text-gray-600 dark:text-gray-300 font-bold hover:text-partyBlue dark:hover:text-partyYellow px-3 py-1 transition-colors border-b-4 border-transparent hover:border-partyBlue hover-trigger">แผนการทำงาน</a></li>
                 <li>
-                    <a href="policy.html" class="bg-partyBlue text-white border-2 border-partyBlue px-6 py-2 font-bold shadow-[4px_4px_0px_0px_#facc15] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all inline-block rounded-sm hover:bg-partyDarkBlue hover-trigger">
+                    <a href="policy.html" class="bg-partyBlue text-white border-2 border-partyBlue px-6 py-2 font-bold shadow-[4px_4px_0px_0px_#f472b6] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all inline-block rounded-sm hover:bg-partyDarkBlue hover-trigger">
                         ดูนโยบาย
                     </a>
                 </li>
                 <li>
                     <button onclick="toggleTheme()" class="hover-trigger bg-gray-100 dark:bg-gray-800 p-2 rounded-full border-2 border-gray-300 dark:border-gray-600 hover:border-partyYellow transition-all group relative overflow-hidden h-10 w-10 flex items-center justify-center">
-                        <svg class="sun-icon absolute w-5 h-5 text-yellow-500 transform translate-y-12 dark:translate-y-0 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <svg class="sun-icon absolute w-5 h-5 text-pink-400 transform translate-y-12 dark:translate-y-0 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                         <svg class="moon-icon absolute w-5 h-5 text-partyBlue dark:translate-y-12 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     </button>
                 </li>
@@ -167,6 +167,7 @@
                     <div class="bg-white p-1 rounded-full shadow-md hidden sm:block">
                         <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Council_Panthong_Saphanupathamnd.png" alt="Council Logo" class="h-8 w-8 drop-shadow-sm">
                     </div>
+                    
                     <div class="bg-partyYellow text-partyBlue font-black px-3 py-1 text-sm md:text-base uppercase tracking-wider flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.4)] transform hover:scale-105 transition-transform">
                         <span class="relative flex h-3 w-3">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
@@ -175,9 +176,10 @@
                         OFFICIAL
                     </div>
                     <h2 class="text-white font-bold text-sm md:text-lg tracking-wide md:border-l-2 md:border-white/30 md:pl-4">
-                        คณะกรรมการสภานักเรียน Pioneer ประจำปีการศึกษา 2569
+                        คณะกรรมการสภานักเรียนโรงเรียนพานทองสภาชนูปถัมภ์ ประจำปีการศึกษา 2569
                     </h2>
                 </div>
+                
                 <div class="text-partyYellow font-bold text-sm md:text-base tracking-wider flex items-center gap-2 bg-white/10 px-3 py-1 rounded-sm backdrop-blur-sm">
                     <span class="font-mono text-white">READY TO SERVE</span> 
                     <span class="text-partyYellow animate-pulse">●</span> 
@@ -200,7 +202,7 @@
         </div>
 
         <div class="mt-12 flex justify-center px-4 reveal-on-scroll">
-            <div class="max-w-2xl w-full bg-yellow-50 dark:bg-gray-800 border-l-8 border-partyYellow p-4 md:p-6 rounded-r-lg shadow-sm border-y-2 border-r-2 border-partyBlue dark:border-gray-700 relative overflow-hidden">
+            <div class="max-w-2xl w-full bg-pink-50 dark:bg-gray-800 border-l-8 border-partyYellow p-4 md:p-6 rounded-r-lg shadow-sm border-y-2 border-r-2 border-partyBlue dark:border-gray-700 relative overflow-hidden">
                 <div class="flex items-start gap-4 relative z-10 text-left">
                     <div class="bg-partyBlue text-white p-2 rounded-full shrink-0 animate-bounce shadow-md border-2 border-partyYellow hidden md:block">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -234,7 +236,7 @@
                 <div class="bg-white p-2 rounded-full -rotate-6 group-hover:rotate-0 transition-all duration-300 shadow-[4px_4px_0px_0px_#ffffff] w-20 h-20 md:w-28 md:h-28 flex items-center justify-center border-4 border-partyBlue group-hover:scale-105 relative z-10">
                     <img src="images/Panthong_Saphanupathamnd/Remove_Backgrou_Council_Panthong_Saphanupathamnd.png" alt="Council Logo" class="w-full h-full object-contain drop-shadow-sm">
                 </div>
-                <div class="bg-white p-3 rounded-xl rotate-6 group-hover:rotate-0 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(250,204,21,1)] w-20 h-20 md:w-28 md:h-28 flex items-center justify-center border-4 border-partyBlue group-hover:scale-105 -ml-6 md:-ml-8 relative z-0">
+                <div class="bg-white p-3 rounded-xl rotate-6 group-hover:rotate-0 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(244,114,182,1)] w-20 h-20 md:w-28 md:h-28 flex items-center justify-center border-4 border-partyBlue group-hover:scale-105 -ml-6 md:-ml-8 relative z-0">
                     <img src="images/Pioneer logo 3.png" alt="Pioneer Logo" class="w-full h-full object-contain">
                 </div>
             </div>
@@ -256,14 +258,14 @@
                 
                 <a href="https://instagram.com/thepioneerpsc" target="_blank" class="hover-trigger flex items-center gap-4 text-white hover:text-partyYellow transition-colors group">
                     <span class="font-bold text-lg md:text-xl group-hover:-translate-x-2 transition-transform tracking-wide">thepioneerpsc</span>
-                    <div class="bg-white text-partyBlue p-2 md:p-3 rounded-full border-2 border-partyBlue group-hover:bg-partyYellow transition-all shadow-[2px_2px_0px_0px_rgba(250,204,21,1)] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px]">
+                    <div class="bg-white text-partyBlue p-2 md:p-3 rounded-full border-2 border-partyBlue group-hover:bg-partyYellow transition-all shadow-[2px_2px_0px_0px_rgba(244,114,182,1)] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                     </div>
                 </a>
                 
                 <a href="https://tiktok.com/@thepioneerpsc" target="_blank" class="hover-trigger flex items-center gap-4 text-white hover:text-partyYellow transition-colors group">
                     <span class="font-bold text-lg md:text-xl group-hover:-translate-x-2 transition-transform tracking-wide">thepioneerpsc</span>
-                    <div class="bg-white text-partyBlue p-2 md:p-3 rounded-full border-2 border-partyBlue group-hover:bg-partyYellow transition-all shadow-[2px_2px_0px_0px_rgba(250,204,21,1)] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px]">
+                    <div class="bg-white text-partyBlue p-2 md:p-3 rounded-full border-2 border-partyBlue group-hover:bg-partyYellow transition-all shadow-[2px_2px_0px_0px_rgba(244,114,182,1)] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
                     </div>
                 </a>
@@ -419,7 +421,7 @@
             if (isPresident) {
                 cardSizeClass = "w-[85%] max-w-[320px] z-20";
                 borderClass = "border-partyYellow";
-                shadowClass = "shadow-[6px_6px_0px_0px_rgba(250,204,21,1)] md:shadow-[8px_8px_0px_0px_rgba(250,204,21,1)] hover:shadow-none";
+                shadowClass = "shadow-[6px_6px_0px_0px_rgba(244,114,182,1)] md:shadow-[8px_8px_0px_0px_rgba(244,114,182,1)] hover:shadow-none";
             } else if (isHead) {
                 cardSizeClass = "w-[75%] max-w-[280px] z-10";
             } else if (isSmall) {
@@ -535,7 +537,7 @@
                     // ปุ่มกดกางสมาชิก (โชว์เฉพาะบนมือถือ)
                     if (members.length > 0) {
                         htmlContent += `
-                            <button onclick="toggleMembers('${group.id}')" class="md:hidden bg-white text-partyBlue font-black px-6 py-2 border-2 border-partyBlue shadow-[4px_4px_0px_0px_#facc15] hover:translate-y-1 hover:shadow-none transition-all flex items-center gap-2 mb-6 text-sm hover-trigger rounded-full">
+                            <button onclick="toggleMembers('${group.id}')" class="md:hidden bg-white text-partyBlue font-black px-6 py-2 border-2 border-partyBlue shadow-[4px_4px_0px_0px_#f472b6] hover:translate-y-1 hover:shadow-none transition-all flex items-center gap-2 mb-6 text-sm hover-trigger rounded-full">
                                 ดูสมาชิกฝ่าย <span id="icon-${group.id}" class="transition-transform duration-300 inline-block text-lg">🔽</span>
                             </button>
                         `;
